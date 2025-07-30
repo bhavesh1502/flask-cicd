@@ -2,17 +2,21 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      python: 3.8
     commands:
-      - sudo apt update
-      - sudo apt install python3-pip -y
-      - pip3 install flask
-      - mkdir -p /home/ubuntu/app
+      - echo "Installing dependencies..."
   pre_build:
     commands:
-      - echo "No tests to run"
+      - echo "Pre-build: No actions"
   build:
     commands:
-      - echo "No build step required for simple Flask app"
+      - echo "Zipping application for deployment"
+      - zip -r flask-app.zip .
   post_build:
     commands:
       - echo "Build completed"
+
+artifacts:
+  files:
+    - flask-app.zip
