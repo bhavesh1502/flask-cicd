@@ -3,26 +3,16 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing SSH client...
-      - apt-get update
-      - apt-get install -y openssh-client
-
+      - sudo apt update
+      - sudo apt install python3-pip -y
+      - pip3 install flask
+      - mkdir -p /home/ubuntu/app
   pre_build:
     commands:
-      - echo Setting up SSH...
-      - mkdir -p ~/.ssh
-      - echo "$EC2_PRIVATE_KEY" > ~/.ssh/id_rsa
-      - chmod 400 ~/.ssh/id_rsa
-      - ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
-
+      - echo "No tests to run"
   build:
     commands:
-      - echo Deploying to EC2...
-      - ssh ubuntu@$EC2_HOST "rm -rf /home/ubuntu/app && mkdir /home/ubuntu/app"
-      - scp -r * ubuntu@$EC2_HOST:/home/ubuntu/app
-      - ssh ubuntu@$EC2_HOST "pip3 install -r /home/ubuntu/app/requirements.txt"
-      - ssh ubuntu@$EC2_HOST "pkill -f app.py || true"
-      - ssh ubuntu@$EC2_HOST "nohup python3 /home/ubuntu/app/app.py > app.log 2>&1 &"
-
-artifacts:
-  files: []
+      - echo "No build step required for simple Flask app"
+  post_build:
+    commands:
+      - echo "Build completed"
