@@ -17,11 +17,12 @@ phases:
 
   build:
     commands:
-      - echo Copying files to EC2...
+      - echo Deploying to EC2...
       - ssh ubuntu@$EC2_HOST "rm -rf /home/ubuntu/app && mkdir /home/ubuntu/app"
       - scp -r * ubuntu@$EC2_HOST:/home/ubuntu/app
       - ssh ubuntu@$EC2_HOST "pip3 install -r /home/ubuntu/app/requirements.txt"
       - ssh ubuntu@$EC2_HOST "pkill -f app.py || true"
       - ssh ubuntu@$EC2_HOST "nohup python3 /home/ubuntu/app/app.py > app.log 2>&1 &"
+
 artifacts:
   files: []
